@@ -4,6 +4,7 @@ Perlin Noise 2D Generation
 Written by AF & KP
 """
 from typing import Callable
+from maths import lerp
 class Colour:
     def __init__(self, r: float, g: float, b: float):
         for v in [r, g, b]:
@@ -47,34 +48,6 @@ class ColourBounds:
                 return colour((v-lb)/(ub-lb)) if type(colour) == ColourRange else colour(v)
         return Colour(0, 0, 0)
     
-def smoothstep(start: float, end: float, weight: float) -> float:
-    """
-    Uses smoothstep to interpolate between two floats ∈ [start, end].
-
-        Parameters:
-            start (float): start of the interpolation range.
-            end (float): end of the interpolation range.
-            weight (float): the weight of the interpolation in the range [0, 1].
-
-        Returns:
-            float: the interpolated value in the range [start, end].
-    """
-    return (end-start)*(3-weight*2)*(weight**2)+start    
-
-def lerp(start: float, end:float, weight:float) -> float:
-    """
-    Uses linear interpolation to interpolate between two floats ∈ [start, end].
-    
-    Parameters:
-        start (float): start of the interpolation range.
-        end (float): end of the interpolation range.
-        weight (float): the weight of the interpolation in the range [0, 1].
-    
-    Returns:
-        float: the interpolated value in the range [start, end].
-    """
-    return (end-start)*weight+start    
-
 terrainColours = ColourBounds({
      -1.0: Colour(0, 0, 0),
      -0.3: ColourRange(Colour(20, 20, 20), Colour(20, 20, 130), lerp),

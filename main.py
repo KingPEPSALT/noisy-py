@@ -8,6 +8,8 @@ import math
 import random
 from generators import PerlinNoiseGenerator, OctavePerlinNoiseGenerator
 from colouring import colourHeightMapImage, terrainColours
+from maths import scaleHeight, smoothstep
+
 def generateGradients(width: int, height: int) -> list[list[tuple[float, float]]]:
     """
     Generates a random grid of gradients for use in noise generation.
@@ -32,34 +34,6 @@ def generateGradients(width: int, height: int) -> list[list[tuple[float, float]]
     return gradients
 
 # main code 
-
-def smoothstep(start: float, end: float, weight: float) -> float:
-    """
-    Uses smoothstep to interpolate between two floats ∈ [start, end].
-
-        Parameters:
-            start (float): start of the interpolation range.
-            end (float): end of the interpolation range.
-            weight (float): the weight of the interpolation in the range [0, 1].
-
-        Returns:
-            float: the interpolated value in the range [start, end].
-    """
-    return (end-start)*(3-weight*2)*(weight**2)+start
-
-def scaleHeight(height: float, lower: float, upper: float) -> float:
-    """
-    Scales a value, height ∈ [-1, 1], to a range [lower, upper].
-
-        Parameters:
-            height (float): a value in the range [-1, 1].
-            lower (float): the lower bound of the target range.
-            upper (float): the upper bound of the target range.
-
-        Returns:
-            float: the scaled value in the range [lower, upper].
-    """
-    return (height+1)/2*(upper-lower) + lower
 
 # terminal classical greyscale display
 def greyscaleRepresentation(heights: list[list[float]]) -> None:
@@ -89,8 +63,8 @@ octavePerlin = OctavePerlinNoiseGenerator(generateGradients(w*2**4, h*2**4), smo
 perlinHeight = perlin.generateHeightMap(w, h, res)
 octavePerlinHeight = octavePerlin.generateHeightMap(w, h, res)
 
-greyscaleImageRepresentation("perlin.png", perlinHeight)
-greyscaleImageRepresentation("octaves.png", octavePerlinHeight)
+greyscaleImageRepresentation("img/perlin.png", perlinHeight)
+greyscaleImageRepresentation("img/octaves.png", octavePerlinHeight)
 
-colourHeightMapImage("terrainPerlin.png", perlinHeight, terrainColours)
-colourHeightMapImage("terrainPerlinOctave.png", octavePerlinHeight, terrainColours)
+colourHeightMapImage("img/terrainPerlin.png", perlinHeight, terrainColours)
+colourHeightMapImage("img/terrainPerlinOctave.png", octavePerlinHeight, terrainColours)

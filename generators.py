@@ -7,13 +7,7 @@ Written by AF & KP
 import math
 from typing import Callable, Any
 from abc import ABC, abstractmethod
-
-def dotGradient(candidate: tuple[int, int], pt: tuple[float, float], gradients: list[list[tuple[float, float]]]) -> float:
-    # offset vector
-    diff = (pt[0]-candidate[0], pt[1]-candidate[1])
-    # use candidate to grab gradient
-    gradient = gradients[candidate[1]][candidate[0]]
-    return diff[0]*gradient[0] + diff[1]*gradient[1]
+from maths import dotGradient
 
 class NoiseGenerator(ABC):
     def __init__(self, gradients: list[list[tuple[float, float]]], interpolator: Callable[[float, float, float], float],  **settings: Any):
