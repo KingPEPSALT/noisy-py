@@ -42,8 +42,6 @@ class ColourBounds:
         if not self.lower <= v <= self.upper:
             raise ValueError(f"value(={v}) must lie within [{self.lower}, {self.upper}]") 
         for (lb, _), (ub, colour) in zip(self.colours.items(), list(self.colours.items())[1:]):
-            if lb is None:
-                lb = 0
             if lb <= v <= ub:
                 return colour((v-lb)/(ub-lb)) if type(colour) == ColourRange else colour(v)
         return Colour(0, 0, 0)
