@@ -71,7 +71,6 @@ def colourHeightMapImage(filename: str, heights: list[list[float]], colourBounds
     import os
     
     image = Image.new("RGB", (len(heights[0]), len(heights)))
-    image.putdata([colourBounds.at(h).prepare() for y in heights for h in y])
-    
+    image.putdata([colourBounds.at(h).prepare() for y in heights for h in y]) # type: ignore    
     image.save(filename)
     print(f'Saved: FILENAME = {filename}, SIZE = {os.path.getsize(filename)}B, WxH = {image.width}x{image.height}')
