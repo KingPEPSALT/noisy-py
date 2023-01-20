@@ -6,7 +6,7 @@ Written by AF & KP
 
 import math
 import random
-from generators import PerlinNoiseGenerator, OctavePerlinNoiseGenerator
+from generators import PerlinNoiseGenerator, OctavePerlinNoiseGenerator, SimplexNoiseGenerator, OctaveSimplexNoiseGenerator
 from colouring import colourHeightMapImage, terrainColours, terrainColoursSmoothstep
 from maths import scaleHeight, smoothstep
 
@@ -56,17 +56,23 @@ def greyscaleImageRepresentation(filename: str, heights: list[list[float]]) -> N
     
     print(f'Saved: FILENAME = {filename}, SIZE = {os.path.getsize(filename)}B, WxH = {img.width}x{img.height}')
 
-w, h, res = 5, 5, 100
+w, h, res = 3, 3, 200
 perlin = PerlinNoiseGenerator(generateGradients(w, h), smoothstep)
 octavePerlin = OctavePerlinNoiseGenerator(generateGradients(w*2**2, h*2**2), smoothstep, octaves=2, persistence=0.5, lacunarity=2)
+simplex = SimplexNoiseGenerator(generateGradients(w*2, h*2), rsq=0.6, scale=32)
+octaveSimplex = OctaveSimplexNoiseGenerator(generateGradients(w*2*2**2, h*2*2**2), octaves=2, persistence=0.5, lacunarity=2, rsq=0.5, scale = 32)
 
 perlinHeight = perlin.generateHeightMap(w, h, res)
 octavePerlinHeight = octavePerlin.generateHeightMap(w, h, res)
+simplexHeight = simplex.generateHeightMap(w, h, res)
+octaveSimplexHeight = octaveSimplex.generateHeightMap(w, h, res)
 
 greyscaleImageRepresentation("img/perlin.png", perlinHeight)
-greyscaleImageRepresentation("img/octaves.png", octavePerlinHeight)
+greyscaleImageRepresentation("img/octavep.png", octavePerlinHeight)
+greyscaleImageRepresentation("img/simplex.png", simplexHeight)
+greyscaleImageRepresentation("img/octaves.png", octaveSimplexHeight)
 
-colourHeightMapImage("img/terrainPerlin.png", perlinHeight, terrainColours)
-colourHeightMapImage("img/terrainPerlinSmooth.png", perlinHeight, terrainColoursSmoothstep)
-colourHeightMapImage("img/terrainPerlinOctave.png", octavePerlinHeight, terrainColours)
-colourHeightMapImage("img/terrainPerlinOctaveSmooth.png", octavePerlinHeight, terrainColoursSmoothstep)
+colourHeightMapImage("img/terrainPerlin.png", perlinHeight, terrainColoursSmoothstep)
+colourHeightMapImage("img/terrainPerlinOctave.png", octavePerlinHeight, terrainColoursSmoothstep)
+colourHeightMapImage("img/terrainSimplex.png", simplexHeight, terrainColoursSmoothstep)
+colourHeightMapImage("img/terrainSimplexOctave.png", octaveSimplexHeight, terrainColoursSmoothstep)
