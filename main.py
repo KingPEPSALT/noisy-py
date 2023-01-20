@@ -58,7 +58,7 @@ def greyscaleImageRepresentation(filename: str, heights: list[list[float]]) -> N
 
 w, h, res = 5, 5, 100
 perlin = PerlinNoiseGenerator(generateGradients(w, h), smoothstep)
-octavePerlin = OctavePerlinNoiseGenerator(generateGradients(w*2**4, h*2**4), smoothstep, octaves=4, persistence=0.5, lacunarity=2)
+octavePerlin = OctavePerlinNoiseGenerator(generateGradients(w*2**2, h*2**2), smoothstep, octaves=2, persistence=0.5, lacunarity=2)
 
 perlinHeight = perlin.generateHeightMap(w, h, res)
 octavePerlinHeight = octavePerlin.generateHeightMap(w, h, res)
@@ -69,3 +69,4 @@ greyscaleImageRepresentation("img/octaves.png", octavePerlinHeight)
 colourHeightMapImage("img/terrainPerlin.png", perlinHeight, terrainColours)
 colourHeightMapImage("img/terrainPerlinSmooth.png", perlinHeight, terrainColoursSmoothstep)
 colourHeightMapImage("img/terrainPerlinOctave.png", octavePerlinHeight, terrainColours)
+colourHeightMapImage("img/terrainPerlinOctaveSmooth.png", octavePerlinHeight, terrainColoursSmoothstep)
