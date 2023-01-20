@@ -33,7 +33,7 @@ class NoiseGenerator(ABC):
         """
         pass
     
-    def generateHeightMap(self, resolution: int) -> list[list[float]]:
+    def generateHeightMap(self, width:int, height:int, resolution: int) -> list[list[float]]:
         """
         Generates a grid of heights using the NoiseGenerator.
 
@@ -42,7 +42,7 @@ class NoiseGenerator(ABC):
             Returns:
                 list[list[float]]: the generated grid of heights.                    
         """
-        return [[self((x/resolution, y/resolution)) for x in range((len(self.gradients[0])-1)*resolution)] for y in range((len(self.gradients)-1)*resolution)]
+        return [[self((x/resolution, y/resolution)) for x in range((width-1)*resolution)] for y in range((height-1)*resolution)]
 
 class PerlinNoiseGenerator(NoiseGenerator):
     def __init__(self, gradients: list[list[tuple[float, float]]], interpolator: Callable[[float, float, float], float], **settings: Any):

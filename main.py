@@ -7,7 +7,7 @@ Written by AF & KP
 import math
 import random
 from generators import PerlinNoiseGenerator, OctavePerlinNoiseGenerator
-    
+from colouring import colourHeightMapImage, terrainColours
 def generateGradients(width: int, height: int) -> list[list[tuple[float, float]]]:
     """
     Generates a random grid of gradients for use in noise generation.
@@ -86,5 +86,11 @@ w, h, res = 5, 5, 100
 perlin = PerlinNoiseGenerator(generateGradients(w, h), smoothstep)
 octavePerlin = OctavePerlinNoiseGenerator(generateGradients(w*2**4, h*2**4), smoothstep, octaves=4, persistence=0.5, lacunarity=2)
 
-greyscaleImageRepresentation("perlin.png", perlin.generateHeightMap(res))
-greyscaleImageRepresentation("octaves.png", octavePerlin.generateHeightMap(res))
+perlinHeight = perlin.generateHeightMap(w, h, res)
+octavePerlinHeight = octavePerlin.generateHeightMap(w, h, res)
+
+greyscaleImageRepresentation("perlin.png", perlinHeight)
+greyscaleImageRepresentation("octaves.png", octavePerlinHeight)
+
+colourHeightMapImage("terrainPerlin.png", perlinHeight, terrainColours)
+colourHeightMapImage("terrainPerlinOctave.png", octavePerlinHeight, terrainColours)
