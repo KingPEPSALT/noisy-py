@@ -7,7 +7,7 @@ Written by AF & KP
 import math
 import random
 from generators import PerlinNoiseGenerator, OctavePerlinNoiseGenerator
-from colouring import colourHeightMapImage, terrainColours
+from colouring import colourHeightMapImage, terrainColours, terrainColoursSmoothstep
 from maths import scaleHeight, smoothstep
 
 def generateGradients(width: int, height: int) -> list[list[tuple[float, float]]]:
@@ -67,4 +67,5 @@ greyscaleImageRepresentation("img/perlin.png", perlinHeight)
 greyscaleImageRepresentation("img/octaves.png", octavePerlinHeight)
 
 colourHeightMapImage("img/terrainPerlin.png", perlinHeight, terrainColours)
+colourHeightMapImage("img/terrainPerlinSmooth.png", perlinHeight, terrainColoursSmoothstep)
 colourHeightMapImage("img/terrainPerlinOctave.png", octavePerlinHeight, terrainColours)
